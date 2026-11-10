@@ -174,8 +174,8 @@ footer { padding-block: 48px 40px; color: var(--muted); font-size: 0.875rem; bor
       <a href="#embeddings">Real embeddings</a>
       <a href="#results">Results</a>
       <a href="#ablations">Ablations</a>
-      <a href="#code">Code</a>
       <a href="#bibtex">BibTeX</a>
+      <a href="https://github.com/prinshul/CSSL" target="_blank" rel="noopener">Code</a>
     </nav>
   </header>
 
@@ -185,7 +185,7 @@ footer { padding-block: 48px 40px; color: var(--muted); font-size: 0.875rem; bor
         <source src="cssl_explainer.mp4" type="video/mp4">
       </video>
     </div>
-    <p class="video-cap small muted">Explainer, 2:47, no narration. Steps 1, 2 and 4 use a real MoNuSeg test image and the trained network's features; the embedding scene and all numbers come from the reported runs.</p>
+    <p class="video-cap small muted">A three-minute walkthrough of how CSSL works, from class-wise patches to the Silhouette-adaptive consistency loss, followed by the results. The examples use a real MoNuSeg test image and the trained network.</p>
   </div>
 
   <div class="keys">
@@ -208,7 +208,7 @@ footer { padding-block: 48px 40px; color: var(--muted); font-size: 0.875rem; bor
 
   <section id="abstract">
     <div class="head"><div class="eyebrow">Abstract</div></div>
-    <p class="read">We present CSSL, a contrastive semi-supervised method for medical image segmentation. CSSL samples class-wise patches from labelled images and from confident pseudo-labels, separates their embeddings with a supervised contrastive loss with mixed hard negatives, and uses the Silhouette coefficient of the embedding clusters to set the strength of a feature-perturbation consistency loss. Patch embeddings are obtained by masked pooling of the encoder features of the unmasked image, nucleus rims form an additional contrastive class, a memory bank stores past embeddings, and the CSSL losses are added to a weak-to-strong pseudo-labelling recipe. We follow the protocols of the strongest published baselines: Self-Loop on MoNuSeg and DAFNet on CHAOS. On MoNuSeg with 50% labels, CSSL reaches 80.87 ± 0.17 nuclei F1 over three label splits, compared with 79.10 for Self-Loop and 78.73 for the same recipe without CSSL. On CHAOS T2 with 25% labels, CSSL reaches 89.01 Dice, compared with 82.0 for DAFNet and 88.94 for the recipe alone. Ablations show that the contrastive branch, the boundary class and feature-level pooling account for most of the improvement.</p>
+    <p class="read">We present CSSL, a contrastive semi-supervised method for medical image segmentation. CSSL samples class-wise patches from labelled images and from confident pseudo-labels, separates their embeddings with a supervised contrastive loss with mixed hard negatives, and uses the Silhouette coefficient of the embedding clusters to set the strength of a feature-perturbation consistency loss. On MoNuSeg, patch embeddings are obtained by masked pooling of the encoder features of the unmasked image, nucleus rims form an additional contrastive class and a memory bank stores past embeddings; on CHAOS, patches are pixel-masked and no memory bank is used. The CSSL losses are added to a weak-to-strong pseudo-labelling recipe. We follow the protocols of published baselines: Self-Loop on MoNuSeg and DAFNet on CHAOS. On MoNuSeg with 50% labels, CSSL reaches 80.87 ± 0.17 nuclei F1 over three label splits, compared with 79.10 for Self-Loop and 78.73 for the same recipe without CSSL. On CHAOS T2 with 25% labels, CSSL reaches 89.01 Dice, compared with 82.0 for DAFNet and 88.94 for the recipe alone. Ablations show that the contrastive branch and, on MoNuSeg, the boundary class and feature-level pooling account for most of the improvement.</p>
   </section>
 
   <section id="method">
@@ -386,32 +386,7 @@ footer { padding-block: 48px 40px; color: var(--muted); font-size: 0.875rem; bor
     </div>
   </section>
 
-  <section id="code">
-    <div class="head">
-      <div class="eyebrow">Code</div>
-      <h2>From an empty machine to the paper's numbers</h2>
-      <p class="read muted">One command trains all 28 runs (main results and ablations, about 45 GPU-hours on one 80 GB GPU), checks the runs for leakage, writes the paper's numbers and figures, builds the PDF and prints the result tables. GPU training is not bit-exact, so a rerun lands within run-to-run noise of the reported values.</p>
-    </div>
-    <div class="steps">
-      <div class="code-block">
-        <div class="code-head"><h3>1. Environment</h3><button class="copy" type="button" data-copy="c1">Copy</button></div>
-        <pre id="c1">conda create -y -n cssl python=3.10
-conda activate cssl
-pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cu121
-pip install -r requirements.txt
-python -m pytest -q tests</pre>
-      </div>
-      <div class="code-block">
-        <div class="code-head"><h3>2. Everything: data, 28 runs, paper</h3><button class="copy" type="button" data-copy="c2">Copy</button></div>
-        <pre id="c2">DATA=/data/med STAGES="setup runs paper" nohup bash run_paper.sh &gt; run_paper.log 2&gt;&amp;1 &amp;
-tail -f run_paper.log</pre>
-      </div>
-      <div class="code-block">
-        <div class="code-head"><h3>3. Results at any time</h3><button class="copy" type="button" data-copy="c3">Copy</button></div>
-        <pre id="c3">python tools/print_results.py --exp exp</pre>
-      </div>
-    </div>
-  </section>
+
 
   <section id="bibtex">
     <div class="head"><div class="eyebrow">BibTeX</div></div>
@@ -421,15 +396,10 @@ tail -f run_paper.log</pre>
   title  = {Contrastive Semi-Supervised Segmentation with Class-wise
             Patches and Silhouette-Adaptive Consistency},
   author = {Pandey, Prashant},
-  year   = {2026},
-  note   = {Indian Institute of Technology Delhi}
+  year   = {2026}
 }</pre>
     </div>
   </section>
-
-  <footer>
-    Prashant Pandey · Indian Institute of Technology Delhi · getprashant57@gmail.com
-  </footer>
 </div>
 
 <script>
